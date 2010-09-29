@@ -1,14 +1,3 @@
-/**
- * A standalone example of how a large result set can be "streamed" to the
- * client
- * 
- * Used to demonstrate very fast transactions with MarkLogic - close to 300 docs
- * sorted into a List Object in less than half a second from beginning to end.
- * 
- * @author ableasdale
- * 
- */
-
 package com.xmlmachines;
 
 import java.net.URI;
@@ -31,8 +20,14 @@ import com.marklogic.xcc.exceptions.RequestException;
 import com.marklogic.xcc.exceptions.XccConfigException;
 
 /**
- * Created by IntelliJ IDEA. User: ableasdale Date: Sep 27, 2010 Time: 10:53:11
- * AM To change this template use File | Settings | File Templates.
+ * A standalone example of how a large result set can be "streamed" to the
+ * client
+ * 
+ * Used to demonstrate very fast transactions with MarkLogic - close to 300 docs
+ * sorted into a List Object in less than half a second from beginning to end.
+ * 
+ * @author ableasdale
+ * 
  */
 public class XccStreamedConnector {
 
