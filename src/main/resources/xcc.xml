@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-  <test>
-    <uri>xcc://localhost:8002</uri>
-  </test>
+  <uris>
+    <uri>xcc://admin:admin@localhost:8003</uri>
+    <uri>xcc://admin:admin@localhost:8004</uri>
+    <uri>xcc://admin:admin@localhost:8005</uri>
+  </uris>
+  <!-- scheme>even</scheme -->
 </configuration>
