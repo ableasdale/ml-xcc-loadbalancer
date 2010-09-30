@@ -24,7 +24,10 @@ public class XCCThreadTest {
 	private static List<ThreadTimingBean> timings;
 	private static AtomicInteger counter;
 	private final static int THREADS = 1000;
-	private final static String fileNamePrefix = "C:\\Users\\ableasdale\\threadReport-";
+
+	// String path = System.getProperty(userHome);
+	private final static String fileNamePrefix = System
+			.getProperty("user.home") + "\\threadReport-";
 
 	private static final Logger LOG = Logger.getLogger(XCCThreadTest.class);
 
@@ -37,7 +40,7 @@ public class XCCThreadTest {
 			IOException {
 
 		Logger LOG = Logger.getLogger(XCCThreadTest.class);
-
+		LOG.info("home dir: " + System.getProperty("user.home"));
 		applicationStartTime = System.currentTimeMillis();
 		counter = new AtomicInteger(0);
 		timings = new ArrayList<ThreadTimingBean>();
