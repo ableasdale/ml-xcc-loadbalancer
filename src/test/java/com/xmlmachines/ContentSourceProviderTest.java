@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.marklogic.xcc.Session;
+import com.xmlmachines.providers.ContentSourceProvider;
 
 public class ContentSourceProviderTest {
 

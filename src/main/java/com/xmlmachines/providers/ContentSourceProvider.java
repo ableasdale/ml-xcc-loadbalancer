@@ -1,4 +1,4 @@
-package com.xmlmachines;
+package com.xmlmachines.providers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,6 +23,7 @@ import com.marklogic.xcc.exceptions.RequestException;
 import com.marklogic.xcc.exceptions.XccConfigException;
 import com.xmlmachines.exceptions.ConnectionFailedException;
 import com.xmlmachines.exceptions.ContentSourceAlreadyEnlistedException;
+import com.xmlmachines.util.Consts;
 
 /**
  * The ContentSourceProvider is a Singleton Class - use getInstance() to access
@@ -87,8 +88,7 @@ public class ContentSourceProvider {
 					"Required Parameters are null when initializing, unable to continue",
 					e);
 		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(Consts.returnExceptionString(e));
 		}
 	}
 
@@ -160,14 +160,11 @@ public class ContentSourceProvider {
 				LOG.info(MessageFormat.format("Created XCC Connection: {0}",
 						uri.toString()));
 			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error(Consts.returnExceptionString(e));
 			} catch (XccConfigException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error(Consts.returnExceptionString(e));
 			} catch (ContentSourceAlreadyEnlistedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error(Consts.returnExceptionString(e));
 			}
 		}
 		LOG.info(MessageFormat
@@ -399,8 +396,7 @@ public class ContentSourceProvider {
 		try {
 			return getSessionAtIndex(0);
 		} catch (ConnectionFailedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(Consts.returnExceptionString(e));
 		}
 		return null;
 	}

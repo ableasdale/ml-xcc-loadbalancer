@@ -1,4 +1,4 @@
-package com.xmlmachines;
+package com.xmlmachines.beans;
 
 public class ThreadTimingBean {
 

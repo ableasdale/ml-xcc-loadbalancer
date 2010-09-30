@@ -9,6 +9,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 
+import com.xmlmachines.beans.ThreadTimingBean;
+import com.xmlmachines.util.Consts;
+import com.xmlmachines.util.StatisticsManager;
+
 public class XCCThreadTest {
 
 	private static long applicationStartTime;
@@ -53,8 +57,7 @@ public class XCCThreadTest {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error(Consts.returnExceptionString(e));
 			}
 			// TODO - do something here like save a five NYT docs in a
 			// collection?

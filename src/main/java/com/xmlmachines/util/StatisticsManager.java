@@ -1,4 +1,4 @@
-package com.xmlmachines;
+package com.xmlmachines.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,11 +11,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.xmlmachines.beans.ThreadTimingBean;
+
 public class StatisticsManager {
 	private FileWriter fw;
 	private final BufferedWriter buffer;
+	private final Logger LOG;
 
 	public StatisticsManager(String testName) {
+		LOG = Logger.getLogger(getClass().getName());
 
 		String fileNamePrefix = System.getProperty("user.home") + "\\"
 				+ testName + "-";
@@ -26,8 +32,7 @@ public class StatisticsManager {
 					+ formatter.format(Calendar.getInstance().getTime())
 					+ ".csv"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(Consts.returnExceptionString(e));
 		}
 		buffer = new BufferedWriter(fw);
 
@@ -45,8 +50,7 @@ public class StatisticsManager {
 			buffer.write(sb.toString());
 			buffer.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(Consts.returnExceptionString(e));
 		}
 	}
 

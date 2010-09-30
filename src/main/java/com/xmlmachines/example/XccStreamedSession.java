@@ -15,7 +15,7 @@ import com.marklogic.xcc.ResultSequence;
 import com.marklogic.xcc.Session;
 import com.marklogic.xcc.exceptions.RequestException;
 import com.marklogic.xcc.exceptions.XccConfigException;
-import com.xmlmachines.ContentSourceProvider;
+import com.xmlmachines.providers.ContentSourceProvider;
 
 /**
  * A standalone example of how a large result set can be "streamed" to the

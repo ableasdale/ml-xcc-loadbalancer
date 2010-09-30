@@ -1,4 +1,6 @@
-package com.xmlmachines;
+package com.xmlmachines.util;
+
+import com.xmlmachines.beans.ThreadTimingBean;
 
 public class Process implements Runnable {
 
@@ -7,7 +9,7 @@ public class Process implements Runnable {
 
 	public void savePage() {
 		System.out
-				.println("TODO - do something here like save a five NYT docs in a collection?");
+				.println("TODO - any benefit in this being in a separate class?");
 	}
 
 	@Override

@@ -9,6 +9,8 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import com.xmlmachines.util.Consts;
+
 public class ConfigurationTest {
 
 	private static Logger LOG = Logger.getLogger(ConfigurationTest.class);
@@ -24,8 +26,7 @@ public class ConfigurationTest {
 				Assert.assertTrue(((Collection) prop).size() > 1);
 			}
 		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(Consts.returnExceptionString(e));
 		}
 	}
 }
