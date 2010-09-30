@@ -67,16 +67,6 @@ public class ContentSourceProvider {
 		connectionFailureMap = new HashMap<URI, Integer>();
 		LOG.debug("Populating ContentSourceProviders from Configuration.");
 
-		/*
-		 * TODO - add content source policy later?? or delete try { String
-		 * configPolicy = checkAndExtractStringFromConfigFile(cfg,
-		 * CONTENT_SOURCE_POLICY); if (configPolicy != null) { policy =
-		 * configPolicy; } } catch (ConfigurationException ce) {
-		 * _logger.warn(MessageFormat .format(
-		 * "No Scheduling policy specified in config file.  Defaulting to {0}",
-		 * policy)); }
-		 */
-
 		try {
 			XMLConfiguration config = new XMLConfiguration("xcc.xml");
 			init(Arrays.asList(config.getStringArray("uris.uri")));
