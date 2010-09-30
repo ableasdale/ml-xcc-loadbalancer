@@ -79,7 +79,6 @@ public class ContentSourceProvider {
 		try {
 			XMLConfiguration config = new XMLConfiguration("xcc.xml");
 			init(Arrays.asList(config.getStringArray("uris.uri")));
-
 			mapActiveContentSources();
 			// TODO - can I get rid of this ready flag??
 			ready = true;
@@ -194,7 +193,7 @@ public class ContentSourceProvider {
 		for (ContentSource c : activeContentSourceList) {
 			// initialize ContentSource 'strike' map
 			connectionFailureMap.put(c.newSession().getConnectionUri(), 0);
-			LOG.info(MessageFormat.format(
+			LOG.debug(MessageFormat.format(
 					"id: {0} | position: {1} | URI: {2} | String: {3}", c
 							.hashCode(), activeContentSourceList.indexOf(c), c
 							.newSession().getConnectionUri(), c.toString()));
@@ -232,6 +231,7 @@ public class ContentSourceProvider {
 				cslist.add(contentSource);
 			}
 		} else {
+			moveContentSourceToInactiveList(contentSource);
 			// TODO handle the invalid here - exception maybe?
 			LOG.error("Unable to enlist ContentSource: an error has occurred.  Please check your settings and configuration parameters.");
 		}
@@ -253,7 +253,7 @@ public class ContentSourceProvider {
 		if (inactiveContentSourceList.contains(contentSource) == false) {
 			inactiveContentSourceList.add(contentSource);
 			LOG.info(MessageFormat.format(
-					"Delisted ContentSource list now has {0} item.",
+					"Delisted ContentSource list now contains {0} item(s).",
 					inactiveContentSourceList.size()));
 		}
 
@@ -332,6 +332,7 @@ public class ContentSourceProvider {
 			if (ready) {
 				strike(session);
 			}
+
 		}
 		return false;
 	}

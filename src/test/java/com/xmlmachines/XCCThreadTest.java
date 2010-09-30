@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.log4j.Logger;
+
 public class XCCThreadTest {
 
 	private static long applicationStartTime;
@@ -22,6 +24,9 @@ public class XCCThreadTest {
 	private static List<ThreadTimingBean> timings;
 	private static AtomicInteger counter;
 	private final static int THREADS = 1000;
+	private final static String fileNamePrefix = "C:\\Users\\ableasdale\\threadReport-";
+
+	private static final Logger LOG = Logger.getLogger(XCCThreadTest.class);
 
 	/**
 	 * @param args
@@ -31,36 +36,40 @@ public class XCCThreadTest {
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 
+		Logger LOG = Logger.getLogger(XCCThreadTest.class);
+
 		applicationStartTime = System.currentTimeMillis();
 		counter = new AtomicInteger(0);
 		timings = new ArrayList<ThreadTimingBean>();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
 
-		fw = new FileWriter(new File("C:\\Users\\ableasdale\\saveapage-"
+		fw = new FileWriter(new File(fileNamePrefix
 				+ formatter.format(Calendar.getInstance().getTime()) + ".csv"));
 		buffer = new BufferedWriter(fw);
 
-		System.out.println(MessageFormat.format("App Started on {0}[{1}]",
-				new Date(), System.currentTimeMillis()));
+		LOG.info(MessageFormat.format("App Started on {0}[{1}]", new Date(),
+				System.currentTimeMillis()));
 
 		XCCThreadTest app = new XCCThreadTest();
 
-		// run multiple threads
-		ArrayList<XCCThreadTest.Process> processes = new ArrayList<XCCThreadTest.Process>();
 		for (int i = 0; i < THREADS; i++) {
-			processes.add(app.new Process());
+			Process p = app.new Process();
+			new Thread(p).start();
 		}
 
-		for (Process c : processes) {
-			new Thread(c).start();
-		}
 	}
 
 	public class Process implements Runnable {
 
 		public void savePage() {
-			System.out
-					.println("TODO - do something here like save a five NYT docs in a collection?");
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// TODO - do something here like save a five NYT docs in a
+			// collection?
 		}
 
 		@Override
@@ -77,7 +86,7 @@ public class XCCThreadTest {
 		}
 	}
 
-	private void putAndReport(ThreadTimingBean t) {
+	private synchronized void putAndReport(ThreadTimingBean t) {
 		t.setAtomicId(counter.incrementAndGet());
 		timings.add(t);
 		StringBuilder sb = new StringBuilder();
@@ -95,50 +104,49 @@ public class XCCThreadTest {
 			e.printStackTrace();
 		}
 		if (counter.get() == THREADS) {
-			System.out
-					.println("All Threads accounted for. Generating test statistics at "
-							+ new Date());
 			applicationEndTime = System.currentTimeMillis();
-			stats();
+			LOG.info("All Threads accounted for. Generating test statistics...\n"
+					+ stats());
 		}
 
 	}
 
-	private void stats() {
-
-		System.out.println("Number of Threads: " + THREADS);
-		System.out.println("Number of MarkLogic Documents Created: "
-				+ (THREADS * 5)); // num pages
-		System.out.println("Start Time: " + applicationStartTime);
+	private String stats() {
+		StringBuilder sb = new StringBuilder();
+		appendStats(sb, "Report Generated", new Date().toString());
+		appendStats(sb, "Number of Threads", THREADS);
+		// TODO - sort this properly (num pages)
+		appendStats(sb, "Number of MarkLogic Documents Created", (THREADS * 5));
+		appendStats(sb, "Start Time", applicationStartTime);
 		List<Long> timePerThread = new ArrayList<Long>();
 		for (ThreadTimingBean tt : timings) {
 			timePerThread.add(tt.getEnd() - tt.getStart());
 		}
-		long minTime = Collections.min(timePerThread);
-		System.out.println("Fastest time for a Thread: " + minTime);
-		long maxTime = Collections.max(timePerThread);
-		System.out.println("Longest time for a Thread: " + maxTime);
+		appendStats(sb, "Fastest time for a Thread",
+				Collections.min(timePerThread));
+		appendStats(sb, "Longest time for a Thread",
+				Collections.max(timePerThread));
 		long sum = 0;
 		for (Long l : timePerThread) {
 			sum += l;
 		}
-		System.out.println("Sum of all Thread timings: " + sum);
-		System.out.println("Average time for a Thread: " + (sum / THREADS));
-
-		// min Thread time
-		// max Thread time
-		// avg Thread time
-		// sum of all Threads
-
-		System.out.println("End Time: " + applicationEndTime);
+		appendStats(sb, "Sum of all Thread timings", sum);
+		appendStats(sb, "Average time for a Thread", (sum / THREADS));
+		appendStats(sb, "End Time", applicationEndTime);
 		// complete time for operation
-
 		long totalApplicationTime = (applicationEndTime - applicationStartTime);
-		long totalApplicationTimeDivNumThreads = (totalApplicationTime / THREADS);
-		System.out.println("Total application running time: "
-				+ totalApplicationTime);
-		System.out.println("Application running time / No. Threads: "
-				+ totalApplicationTimeDivNumThreads);
+		appendStats(sb, "Total application running time", totalApplicationTime);
+		appendStats(sb, "Application running time / No. Threads",
+				(totalApplicationTime / THREADS));
+		return sb.toString();
 	}
 
+	private void appendStats(StringBuilder sb, String statDescription,
+			String stat) {
+		sb.append(statDescription).append(": ").append(stat).append("\n");
+	}
+
+	private void appendStats(StringBuilder sb, String statDescription, long stat) {
+		appendStats(sb, statDescription, String.valueOf(stat));
+	}
 }

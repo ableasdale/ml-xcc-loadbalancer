@@ -39,7 +39,7 @@ public class XccStreamedSession {
 		RequestOptions ro = s.getDefaultRequestOptions();
 		ro.setCacheResult(false);
 		s.setDefaultRequestOptions(ro);
-		Request r = s.newAdhocQuery("doc()[1 to 300]");
+		Request r = s.newAdhocQuery("doc()");
 
 		long l1 = System.currentTimeMillis();
 		ResultSequence rs = s.submitRequest(r);
