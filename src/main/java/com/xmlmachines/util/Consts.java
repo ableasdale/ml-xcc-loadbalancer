@@ -1,7 +1,10 @@
 package com.xmlmachines.util;
+
 import java.text.MessageFormat;
 
 public class Consts {
+
+	public static final String CONFIG_FILE_PATH = "xcc.xml";
 
 	/**
 	 * TODO - should this go elsewhere?.

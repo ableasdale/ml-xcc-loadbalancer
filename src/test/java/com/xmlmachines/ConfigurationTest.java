@@ -1,6 +1,8 @@
 package com.xmlmachines;
 
-import java.util.Collection;
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -18,13 +20,18 @@ public class ConfigurationTest {
 	@Test
 	public void testConfig() {
 		try {
-			XMLConfiguration config = new XMLConfiguration("xcc.xml");
-			Object prop = config.getProperty("uris.uri");
+			XMLConfiguration config = new XMLConfiguration(
+					Consts.CONFIG_FILE_PATH);
+			List<String> l = Arrays.asList(config.getStringArray("uris.uri"));
+			LOG.info(MessageFormat.format("Number of xcc uris: {0}", l.size()));
 
-			if (prop instanceof Collection) {
-				LOG.info("Number of xcc uris: " + ((Collection) prop).size());
-				Assert.assertTrue(((Collection) prop).size() > 1);
-			}
+			Assert.assertTrue("There should be at least one URI in the list",
+					l.size() > 1);
+			Assert.assertTrue("An XCC URI should start with xcc://", l.get(0)
+					.startsWith("xcc://"));
+			Assert.assertTrue("An XCC URI should contain an @ statement", l
+					.get(0).contains("@"));
+
 		} catch (ConfigurationException e) {
 			LOG.error(Consts.returnExceptionString(e));
 		}

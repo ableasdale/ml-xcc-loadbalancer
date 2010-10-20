@@ -68,7 +68,8 @@ public class ContentSourceProvider {
 		LOG.debug("Populating ContentSourceProviders from Configuration.");
 
 		try {
-			XMLConfiguration config = new XMLConfiguration("xcc.xml");
+			XMLConfiguration config = new XMLConfiguration(
+					Consts.CONFIG_FILE_PATH);
 			init(Arrays.asList(config.getStringArray("uris.uri")));
 			mapActiveContentSources();
 			// TODO - can I get rid of this ready flag??
@@ -162,6 +163,13 @@ public class ContentSourceProvider {
 						connectionsBeforeDelistCheck));
 
 		if (activeContentSourceList.size() == 0) {
+
+			// TODO - we need to find a way to ensure the ContentSourceProvider
+			// re-checks after a total connection failure.... this can be done
+			// by putting it into a mode when the activeContentSourceList.size
+			// is 0 and the inactiveSourceList size is >1. This will poll the
+			// inactiveContentSources every, say 60 seconds until it can
+			// reconnect
 			throw new ConnectionFailedException(
 					"Unable to connect to MarkLogic server using any of the listed URIs. Please check configuration.");
 		}
