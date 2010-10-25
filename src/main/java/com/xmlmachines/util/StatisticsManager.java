@@ -15,22 +15,41 @@ import org.apache.log4j.Logger;
 
 import com.xmlmachines.beans.ThreadTimingBean;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StatisticsManager.
+ * 
+ * @author ableasdale
+ */
 public class StatisticsManager {
+
+	/** The fw. */
 	private FileWriter fw;
+
+	/** The buffer. */
 	private final BufferedWriter buffer;
+
+	/** The LOG. */
 	private final Logger LOG;
 
+	/**
+	 * Instantiates a new statistics manager.
+	 * 
+	 * @param testName
+	 *            the test name
+	 */
 	public StatisticsManager(String testName) {
 		LOG = Logger.getLogger(getClass().getName());
-
-		String fileNamePrefix = System.getProperty("user.home") + "\\"
-				+ testName + "-";
-
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
+		StringBuilder fileNameSb = new StringBuilder();
+
+		fileNameSb.append(System.getProperty("user.home")).append("\\")
+				.append(testName).append("-")
+				.append(formatter.format(Calendar.getInstance().getTime()))
+				.append(".csv");
+
 		try {
-			fw = new FileWriter(new File(fileNamePrefix
-					+ formatter.format(Calendar.getInstance().getTime())
-					+ ".csv"));
+			fw = new FileWriter(new File(fileNameSb.toString()));
 		} catch (IOException e) {
 			LOG.error(Consts.returnExceptionString(e));
 		}
@@ -38,6 +57,12 @@ public class StatisticsManager {
 
 	}
 
+	/**
+	 * Update csv.
+	 * 
+	 * @param t
+	 *            the t
+	 */
 	public synchronized void updateCsv(ThreadTimingBean t) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(t.getAtomicId()).append(",");
@@ -54,6 +79,19 @@ public class StatisticsManager {
 		}
 	}
 
+	/**
+	 * Generate stats.
+	 * 
+	 * @param THREADS
+	 *            the tHREADS
+	 * @param applicationStartTime
+	 *            the application start time
+	 * @param applicationEndTime
+	 *            the application end time
+	 * @param timings
+	 *            the timings
+	 * @return the string
+	 */
 	public String generateStats(int THREADS, long applicationStartTime,
 			long applicationEndTime, List<ThreadTimingBean> timings) {
 		StringBuilder sb = new StringBuilder();
@@ -85,11 +123,31 @@ public class StatisticsManager {
 		return sb.toString();
 	}
 
+	/**
+	 * Append stats.
+	 * 
+	 * @param sb
+	 *            the sb
+	 * @param statDescription
+	 *            the stat description
+	 * @param stat
+	 *            the stat
+	 */
 	private void appendStats(StringBuilder sb, String statDescription,
 			String stat) {
 		sb.append(statDescription).append(": ").append(stat).append("\n");
 	}
 
+	/**
+	 * Append stats.
+	 * 
+	 * @param sb
+	 *            the sb
+	 * @param statDescription
+	 *            the stat description
+	 * @param stat
+	 *            the stat
+	 */
 	private void appendStats(StringBuilder sb, String statDescription, long stat) {
 		appendStats(sb, statDescription, String.valueOf(stat));
 	}

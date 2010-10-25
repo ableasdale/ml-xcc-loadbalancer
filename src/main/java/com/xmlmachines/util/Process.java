@@ -14,7 +14,7 @@ public class Process implements Runnable {
 
 	@Override
 	public void run() {
-
+		System.out.println("is this being used?");
 		ThreadTimingBean tt = new ThreadTimingBean();
 		tt.setName(Thread.currentThread().getName());
 		tt.setStart(System.currentTimeMillis());

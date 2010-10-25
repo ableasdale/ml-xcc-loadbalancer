@@ -10,24 +10,44 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.log4j.Logger;
 
 import com.xmlmachines.beans.ThreadTimingBean;
-import com.xmlmachines.util.Consts;
 import com.xmlmachines.util.StatisticsManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class XCCThreadTest.
+ */
 public class XCCThreadTest {
 
+	/** The application start time. */
 	private static long applicationStartTime;
+
+	/** The application end time. */
 	private static long applicationEndTime;
+
+	/** The mgr. */
 	private static StatisticsManager mgr;
+
+	/** The timings. */
 	private static List<ThreadTimingBean> timings;
+
+	/** The counter. */
 	private static AtomicInteger counter;
+
+	/** The Constant THREADS. */
 	private final static int THREADS = 1000;
 
+	/** The Constant LOG. */
 	private static final Logger LOG = Logger.getLogger(XCCThreadTest.class);
 
 	/**
+	 * The main method.
+	 * 
 	 * @param args
+	 *            the arguments
 	 * @throws InterruptedException
+	 *             the interrupted exception
 	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
@@ -51,18 +71,29 @@ public class XCCThreadTest {
 
 	}
 
+	/**
+	 * The Class Process.
+	 */
 	public class Process implements Runnable {
 
+		/**
+		 * Save page.
+		 */
 		public void savePage() {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				LOG.error(Consts.returnExceptionString(e));
-			}
+			/*
+			 * try { Thread.sleep(10); } catch (InterruptedException e) {
+			 * LOG.error(Consts.returnExceptionString(e)); }
+			 */
+			LOG.info("TODO - action here");
 			// TODO - do something here like save a five NYT docs in a
 			// collection?
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Runnable#run()
+		 */
 		@Override
 		public void run() {
 
@@ -77,6 +108,12 @@ public class XCCThreadTest {
 		}
 	}
 
+	/**
+	 * Put and report.
+	 * 
+	 * @param t
+	 *            the t
+	 */
 	private synchronized void putAndReport(ThreadTimingBean t) {
 		t.setAtomicId(counter.incrementAndGet());
 		timings.add(t);

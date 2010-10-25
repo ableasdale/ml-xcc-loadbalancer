@@ -25,24 +25,36 @@ import com.xmlmachines.exceptions.ConnectionFailedException;
 import com.xmlmachines.exceptions.ContentSourceAlreadyEnlistedException;
 import com.xmlmachines.util.Consts;
 
+// TODO: Auto-generated Javadoc
 /**
- * The ContentSourceProvider is a Singleton Class - use getInstance() to access
+ * The ContentSourceProvider is a Singleton Class - use getInstance() to access.
  * 
  * @author ableasdale
  */
 public class ContentSourceProvider {
 
+	/** The active content source list. */
 	private volatile List<ContentSource> activeContentSourceList;
+
+	/** The connection count. */
 	private volatile AtomicInteger connectionCount;
+
+	/** The inactive content source list. */
 	private final List<ContentSource> inactiveContentSourceList;
+
+	/** The connection failure map. */
 	private final Map<URI, Integer> connectionFailureMap;
 
 	/*
 	 * Default initial values
 	 */
+	/** The connections before delist check. */
 	private final int connectionsBeforeDelistCheck = 100000;
 
+	/** The ready. */
 	private boolean ready = false;
+
+	/** The Constant LOG. */
 	private static final Logger LOG = Logger
 			.getLogger(ContentSourceProvider.class);
 
@@ -90,19 +102,21 @@ public class ContentSourceProvider {
 	 * See: http://en.wikipedia.org/wiki/Initialization_on_demand_holder_idiom
 	 */
 	private static class ContentSourceProviderWrapper {
+
+		/** The Constant INSTANCE. */
 		private static final ContentSourceProvider INSTANCE = new ContentSourceProvider();
 	}
 
 	/**
 	 * Generates a Session Object from the ContentSource at the specified index
-	 * position in the List<ContentSource>
+	 * position in the List<ContentSource>.
 	 * 
 	 * @param idx
 	 *            The index position in the List<ContentSource> which will be
 	 *            ContentSource providing the Session.
-	 * 
 	 * @return A MarkLogic Session Object
 	 * @throws ConnectionFailedException
+	 *             the connection failed exception
 	 */
 	private Session getSessionAtIndex(int idx) throws ConnectionFailedException {
 
@@ -126,16 +140,14 @@ public class ContentSourceProvider {
 	}
 
 	/**
-	 * Initialises the MarkLogic ContentSource Objects and adds them to a List
+	 * Initialises the MarkLogic ContentSource Objects and adds them to a List.
 	 * 
-	 * @param server
-	 *            The array of Server URIs
-	 * @param userName
-	 *            The userName for database authentication
-	 * @param password
-	 *            The password for database authentication
+	 * @param uriList
+	 *            the uri list
 	 * @throws ConfigurationException
+	 *             the configuration exception
 	 * @throws ConnectionFailedException
+	 *             the connection failed exception
 	 */
 	private void init(List<String> uriList) throws ConfigurationException,
 			ConnectionFailedException {
@@ -205,6 +217,7 @@ public class ContentSourceProvider {
 	 * @param contentSource
 	 *            The ContentSource to be added to the List
 	 * @throws ContentSourceAlreadyEnlistedException
+	 *             the content source already enlisted exception
 	 */
 	private void addContentSourceToActiveList(List<ContentSource> cslist,
 			ContentSource contentSource)
@@ -235,7 +248,7 @@ public class ContentSourceProvider {
 	/**
 	 * Takes the suspicious ContentSource out of the List<ContentSource>
 	 * contentSourceList and places it in the List<ContentSource>
-	 * delistedContentSourceList
+	 * delistedContentSourceList.
 	 * 
 	 * @param contentSource
 	 *            The ContentSource Object for delisting.
@@ -411,7 +424,7 @@ public class ContentSourceProvider {
 
 	/**
 	 * Creates a MarkLogic XCC Session from a given List of ContentSource
-	 * Objects
+	 * Objects.
 	 * 
 	 * @return a new MarkLogic XCC Session
 	 */
