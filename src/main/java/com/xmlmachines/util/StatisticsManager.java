@@ -11,9 +11,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.xmlmachines.beans.ThreadTimingBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,7 +39,7 @@ public class StatisticsManager {
 	 *            the test name
 	 */
 	public StatisticsManager(String testName) {
-		LOG = Logger.getLogger(getClass().getName());
+		LOG = LoggerFactory.getLogger(getClass().getName());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
 		StringBuilder fileNameSb = new StringBuilder();
 

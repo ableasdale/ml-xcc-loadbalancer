@@ -7,15 +7,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.Logger;
 
 import com.xmlmachines.beans.ThreadTimingBean;
 import com.xmlmachines.util.StatisticsManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class XCCThreadTest.
- */
 public class XCCThreadTest {
 
 	/** The application start time. */
@@ -37,7 +34,7 @@ public class XCCThreadTest {
 	private final static int THREADS = 1000;
 
 	/** The Constant LOG. */
-	private static final Logger LOG = Logger.getLogger(XCCThreadTest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(XCCThreadTest.class);
 
 	/**
 	 * The main method.
@@ -52,7 +49,7 @@ public class XCCThreadTest {
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 
-		Logger LOG = Logger.getLogger(XCCThreadTest.class);
+		Logger LOG = LoggerFactory.getLogger(XCCThreadTest.class);
 
 		applicationStartTime = System.currentTimeMillis();
 		counter = new AtomicInteger(0);

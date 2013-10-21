@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.log4j.Logger;
 
 import com.marklogic.xcc.ContentSource;
 import com.marklogic.xcc.ContentSourceFactory;
@@ -24,6 +23,8 @@ import com.marklogic.xcc.exceptions.XccConfigException;
 import com.xmlmachines.exceptions.ConnectionFailedException;
 import com.xmlmachines.exceptions.ContentSourceAlreadyEnlistedException;
 import com.xmlmachines.util.Consts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -55,8 +56,8 @@ public class ContentSourceProvider {
 	private boolean ready = false;
 
 	/** The Constant LOG. */
-	private static final Logger LOG = Logger
-			.getLogger(ContentSourceProvider.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(ContentSourceProvider.class);
 
 	/**
 	 * Constructor method. Set to private as this is a Singleton class
